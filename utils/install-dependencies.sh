@@ -81,6 +81,21 @@ function install_dependencies_with_apt() {
     sudo apt-get install -y curl make gcc g++ cpanminus libpcre3 libpcre3-dev libldap2-dev unzip openresty-zlib-dev openresty-pcre-dev
 }
 
+function install_dependencies_with_zypper() {
+    sudo rm -f /etc/zypp/repos.d/openresty.repo 2> /dev/null
+    sudo rpm --import https://openresty.org/package/pubkey.gpg
+    sudo zypper ar -g --refresh --check "https://openresty.org/package/sles/openresty.repo"
+    sudo zypper mr -G openresty
+    sudo zypper refresh
+
+    sudo zypper install -y  \
+        awk git gcc gcc-c++ curl wget unzip xz patch \
+        perl libpcre1 pcre-devel pcre-tools openldap2-devel \
+        openresty-zlib-devel openresty-pcre-devel
+    
+    curl -L https://cpanmin.us | perl - --sudo App::cpanminus
+}
+
 # Identify the different distributions and call the corresponding function
 function multi_distro_installation() {
     if grep -Eqi "CentOS" /etc/issue || grep -Eq "CentOS" /etc/*-release; then
@@ -95,6 +110,8 @@ function multi_distro_installation() {
         install_dependencies_with_apt "ubuntu"
     elif grep -Eqi "Arch" /etc/issue || grep -Eqi "EndeavourOS" /etc/issue || grep -Eq "Arch" /etc/*-release; then
         install_dependencies_with_aur
+    elif grep -Eqi "SUSE" /etc/os-release; then
+        install_dependencies_with_zypper
     else
         echo "Non-supported distribution, APISIX is only supported on Linux-based systems"
         exit 1
@@ -113,6 +130,8 @@ function multi_distro_uninstallation() {
         sudo apt-get autoremove -y openresty-zlib-dev openresty-pcre-dev
     elif grep -Eqi "Ubuntu" /etc/issue || grep -Eq "Ubuntu" /etc/*-release; then
         sudo apt-get autoremove -y openresty-zlib-dev openresty-pcre-dev
+    elif grep -Eqi "SUSE" /etc/os-release; then
+        sudo zypper remove -y openresty-zlib-dev openresty-pcre-dev
     else
         echo "Non-supported distribution, APISIX is only supported on Linux-based systems"
         exit 1
