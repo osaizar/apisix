@@ -81,6 +81,7 @@ function install_dependencies_with_apt() {
     sudo apt-get install -y curl make gcc g++ cpanminus libpcre3 libpcre3-dev libldap2-dev unzip openresty-zlib-dev openresty-pcre-dev
 }
 
+# Install dependencies on SLES
 function install_dependencies_with_zypper() {
     sudo rm -f /etc/zypp/repos.d/openresty.repo 2> /dev/null
     sudo rpm --import https://openresty.org/package/pubkey.gpg
