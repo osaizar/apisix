@@ -142,7 +142,11 @@ deps: install-runtime
 
 ### undeps : Uninstalling dependencies
 .PHONY: undeps
-undeps: uninstall-runtime
+undeps: uninstall-rocks uninstall-runtime
+
+
+.PHONY: uninstall-rocks
+uninstall-rocks:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	$(ENV_LUAROCKS) purge --tree=deps
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
@@ -464,4 +468,11 @@ ci-env-down:
 	@$(call func_echo_status, "$@ -> [ Start ]")
 	rm $(OTEL_CONFIG)
 	$(ENV_DOCKER_COMPOSE) down
+	@$(call func_echo_success_status, "$@ -> [ Done ]")
+
+### ci-env-stop : CI env temporary stop
+.PHONY: ci-env-stop
+ci-env-stop:
+	@$(call func_echo_status, "$@ -> [ Start ]")
+	$(ENV_DOCKER_COMPOSE) stop
 	@$(call func_echo_success_status, "$@ -> [ Done ]")
