@@ -94,6 +94,8 @@ function install_dependencies_with_zypper() {
         perl libpcre1 pcre-devel pcre-tools openldap2-devel \
         openresty-zlib-devel openresty-pcre-devel
 
+    zypper install -y libyaml-0-2 libyaml-devel
+
     curl -L https://cpanmin.us | perl - --sudo App::cpanminus
 }
 
