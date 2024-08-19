@@ -29,6 +29,7 @@ jobs:
         os_platform:
           - ubuntu
           - redhat
+          - sles15
     services:
       etcd:
         image: bitnami/etcd:3.5.4
@@ -79,6 +80,12 @@ jobs:
           elif [[ $INSTALL_PLATFORM == "centos7" ]]; then
               docker run -itd -v ${{ github.workspace }}:/apisix --name centos7Instance --net="host" --dns 8.8.8.8 --dns-search apache.org docker.io/centos:7 /bin/bash
               docker exec centos7Instance bash -c "yum install -y git sudo make"
+              docker exec centos7Instance bash -c "cd apisix && make deps"
+              docker exec centos7Instance bash -c "cd apisix && make install"
+              docker exec centos7Instance bash -c "cd apisix && apisix start"
+          elif [[ $INSTALL_PLATFORM == "sles15" ]]; then
+              docker run -itd -v ${{ github.workspace }}:/apisix --name centos7Instance --net="host" --dns 8.8.8.8 --dns-search apache.org registry.suse.com/suse/sle15:15.5 /bin/bash
+              docker exec centos7Instance bash -c "zypper install -y git sudo make"
               docker exec centos7Instance bash -c "cd apisix && make deps"
               docker exec centos7Instance bash -c "cd apisix && make install"
               docker exec centos7Instance bash -c "cd apisix && apisix start"
