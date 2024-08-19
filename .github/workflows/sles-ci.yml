@@ -153,7 +153,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        docker exec sles15Instance bash -c "cd apisix && chmod +x ./ci/sles-ci.sh && ./ci/sles-ci.sh install_dependencies" # TODO write sles-ci.sh
+        docker exec sles15Instance bash -c "cd apisix && chmod +x ./ci/sles-ci.sh && ./ci/sles-ci.sh install_dependencies"
 
     - name: Install rpm package
       if: ${{ startsWith(github.ref, 'refs/heads/release/') }}
@@ -165,7 +165,7 @@ jobs:
 
     - name: Run test cases
       run: |
-        docker exec sles15Instance bash -c "cd apisix && chmod +x ./ci/sles-ci.sh && ./ci/sles-ci.sh run_case" # TODO write sles-ci.sh
+        docker exec sles15Instance bash -c "cd apisix && chmod +x ./ci/sles-ci.sh && ./ci/sles-ci.sh run_case"
 
     - if: ${{ steps.cache-images.outputs.cache-hit != 'true' }}
       name: Save docker images
