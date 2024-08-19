@@ -85,7 +85,8 @@ jobs:
               docker exec centos7Instance bash -c "cd apisix && apisix start"
           elif [[ $INSTALL_PLATFORM == "sles15" ]]; then
               docker run -itd -v ${{ github.workspace }}:/apisix --name sles15Instance --net="host" --dns 8.8.8.8 --dns-search apache.org registry.suse.com/suse/sle15:15.5 /bin/bash
-              docker exec sles15Instance bash -c "zypper install -y git sudo make"
+              docker exec sles15Instance bash -c "zypper install -y git sudo make wget"
+              docker exec sles15Instance bash -c "useradd nobody -U"
               docker exec sles15Instance bash -c "cd apisix && make deps"
               docker exec sles15Instance bash -c "cd apisix && make install"
               docker exec sles15Instance bash -c "cd apisix && apisix start"
