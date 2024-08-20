@@ -23,9 +23,9 @@ install_dependencies() {
 
     # install build & runtime deps
     zypper install -y  \
-    awk git gcc gcc-c++ make curl sudo wget unzip xz patch \
-    perl libpcre1 pcre-devel pcre-tools openldap2-devel \
-    libyaml-0-2 libyaml-devel libopenssl-devel iproute
+    awk automake autoconf libtool git gcc gcc-c++ make curl \
+    sudo wget unzip xz patch perl libpcre1 pcre-devel pcre-tools \
+    openldap2-devel libyaml-0-2 libyaml-devel libopenssl-devel
 
     curl -L https://cpanmin.us | perl - --sudo App::cpanminus
 
@@ -76,7 +76,7 @@ install_dependencies() {
     CGO_ENABLED=0 go build
     popd
 
-    # yum install -y iproute procps # TODO: needed? centos doesn't have it
+    zypper install -y iproute procps
     start_grpc_server_example
 
     # installing grpcurl
