@@ -1,6 +1,11 @@
 name: CI SLES 15
 
 on:
+  push: # Just for testing in fork
+    branches: [master, 'release/**']
+    paths-ignore:
+      - 'docs/**'
+      - '**/*.md'
   schedule:
     - cron: "0 0 * * *"
   pull_request:
@@ -153,7 +158,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        docker exec sles15Instance bash -c "cd apisix && chmod +x ./ci/sles-ci.sh && ./ci/sles-ci.sh install_dependencies"
+        docker exec sles15Instance bash -c "cd apisix && chmod +x ./ci/sles15-ci.sh && ./ci/sles15-ci.sh install_dependencies"
 
     - name: Install rpm package
       if: ${{ startsWith(github.ref, 'refs/heads/release/') }}
@@ -165,7 +170,7 @@ jobs:
 
     - name: Run test cases
       run: |
-        docker exec sles15Instance bash -c "cd apisix && chmod +x ./ci/sles-ci.sh && ./ci/sles-ci.sh run_case"
+        docker exec sles15Instance bash -c "cd apisix && chmod +x ./ci/sles15-ci.sh && ./ci/sles15-ci.sh run_case"
 
     - if: ${{ steps.cache-images.outputs.cache-hit != 'true' }}
       name: Save docker images
