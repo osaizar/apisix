@@ -23,7 +23,7 @@ install_dependencies() {
 
     # install build & runtime deps
     zypper install -y  \
-    awk git gcc gcc-c++ make curl wget unzip xz patch \
+    awk git gcc gcc-c++ make curl sudo wget unzip xz patch \
     perl libpcre1 pcre-devel pcre-tools openldap2-devel \
     libyaml-0-2 libyaml-devel libopenssl-devel
 
