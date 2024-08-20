@@ -75,7 +75,7 @@ install_dependencies() {
     CGO_ENABLED=0 go build
     popd
 
-    # yum install -y iproute procps # TODO: needed? centos doesnt have it
+    # yum install -y iproute procps # TODO: needed? centos doesn't have it
     start_grpc_server_example
 
     # installing grpcurl
