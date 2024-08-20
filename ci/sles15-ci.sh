@@ -61,7 +61,6 @@ install_dependencies() {
     install_brotli
 
     # install test::nginx
-    curl -L https://cpanmin.us | perl - --sudo App::cpanminus # TODO: not needed? we do it earlier
     cpanm --notest Test::Nginx IPC::Run > build.log 2>&1 || (cat build.log && exit 1)
 
     # add go1.15 binary to the path
