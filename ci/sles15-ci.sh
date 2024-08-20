@@ -25,7 +25,7 @@ install_dependencies() {
     zypper install -y  \
     awk git gcc gcc-c++ curl wget unzip xz patch \
     perl libpcre1 pcre-devel pcre-tools openldap2-devel \
-    libyaml-0-2 libyaml-devel
+    libyaml-0-2 libyaml-devel libopenssl-devel
 
     # install newer curl
     zypper install -y libnghttp2-devel
