@@ -27,6 +27,8 @@ install_dependencies() {
     perl libpcre1 pcre-devel pcre-tools openldap2-devel \
     libyaml-0-2 libyaml-devel libopenssl-devel
 
+    curl -L https://cpanmin.us | perl - --sudo App::cpanminus
+
     # install newer curl
     zypper install -y libnghttp2-devel
     install_curl
