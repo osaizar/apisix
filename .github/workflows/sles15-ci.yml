@@ -92,7 +92,7 @@ jobs:
         for dir in `ls|grep -v "^apisix-build-tools$"`;do cp -r $dir ./apisix-build-tools/apisix/;done
 
         cd apisix-build-tools
-        make package type=rpm-sles app=apisix version=${VERSION} checkout=release/${VERSION} image_base=ubi image_tag=8.6 local_code_path=./apisix # TODO: modify this to make SLES
+        make package type=rpm-sles app=apisix version=${VERSION} checkout=release/${VERSION} image_base=registry.suse.com/suse/sle15 image_tag=15.5 local_code_path=./apisix
         cd ..
         rm -rf $(ls -1 -I apisix-build-tools -I t -I utils -I ci --ignore=Makefile -I "*.rockspec")
 
@@ -161,7 +161,7 @@ jobs:
     - name: Install rpm package
       if: ${{ startsWith(github.ref, 'refs/heads/release/') }}
       run: |
-        docker exec sles15Instance bash -c "cd apisix && rpm -iv --prefix=/apisix ./apisix-build-tools/output/apisix-${{ steps.branch_env.outputs.version }}-0.ubi8.6.x86_64.rpm" # TODO adjust to sles build tools
+        docker exec sles15Instance bash -c "cd apisix && rpm -iv --prefix=/apisix ./apisix-build-tools/output/apisix-${{ steps.branch_env.outputs.version }}-0.sle15.5.x86_64.rpm"
         # Dependencies are attached with rpm, so revert `make deps`
         docker exec sles15Instance bash -c "cd apisix && rm -rf deps"
         docker exec sles15Instance bash -c "cd apisix && mv usr/bin . && mv usr/local/apisix/* ."
