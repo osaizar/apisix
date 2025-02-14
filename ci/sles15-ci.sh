@@ -27,6 +27,9 @@ install_dependencies() {
     sudo wget unzip xz patch perl libpcre1 pcre-devel pcre-tools \
     openldap2-devel libyaml-0-2 libyaml-devel libopenssl-devel
 
+    # Link /etc/ssl/ca-bundle.pem to /etc/ssl/certs/ca-certificates.crt to pass the tests
+    ln -s /etc/ssl/ca-bundle.pem /etc/ssl/certs/ca-certificates.crt
+
     curl -L https://cpanmin.us | perl - --sudo App::cpanminus
 
     # install newer curl
